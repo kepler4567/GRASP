@@ -49,12 +49,12 @@ public class Main {
 			Arrays.sort(arrayItens,
 					(itemA, itemB) -> Double.compare(itemB.getValueWeightRatio(), itemA.getValueWeightRatio()));
 
-			int[] melhorSolucao = construirSolucaoGulosa(arrayItens, capacidadesMochila.clone());
+			int[] melhorDistribuicaoItens = construirSolucaoGulosa(arrayItens, capacidadesMochila.clone());
 
 			// Calcular o valor total da solução
-			int valorTotal = calcularValor(melhorSolucao, arrayItens);
+			int valorTotal = calcularValor(melhorDistribuicaoItens, arrayItens);
 
-			imprimirSolucaoDetalhada(melhorSolucao, arrayItens, capacidadesMochila, valorTotal);
+			imprimirSolucaoDetalhada(melhorDistribuicaoItens, arrayItens, capacidadesMochila, valorTotal);
 			
 			// Fim do tempo de execução
             long endTime = System.nanoTime();
@@ -75,7 +75,7 @@ public class Main {
 	private static int[] construirSolucaoGulosa(Item[] itens, int[] capacidadesMochila) {
 		int numItens = itens.length;
 		int numMochilas = capacidadesMochila.length;
-		int[] solucao = new int[numItens * numMochilas];
+		int[] distribuicaoItens = new int[numItens * numMochilas];
 
 		// Tentar alocar os itens com base na razão valor/peso
 		for (int i = 0; i < numItens; i++) {
@@ -84,7 +84,7 @@ public class Main {
 				if (cabeItemNaMochida) {
 					// Aloca o item na mochila j
 					int posicaoItem = i + j * numItens;
-					solucao[posicaoItem] = 1;
+					distribuicaoItens[posicaoItem] = 1;
 
 					// retira o peso do item da mochila
 					int pesoItem = itens[i].getWeight();
@@ -94,7 +94,7 @@ public class Main {
 			}
 		}
 
-		return solucao;
+		return distribuicaoItens;
 	}
 
 	private static int calcularValor(int[] solucao, Item[] itens) {
