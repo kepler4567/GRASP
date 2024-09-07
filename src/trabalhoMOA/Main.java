@@ -42,6 +42,8 @@ public class Main {
 				int valor = Integer.parseInt(fields[1]);
 				arrayItens[i] = new Item(peso, valor);
 			}
+			
+			long startTime = System.nanoTime();
 
 			// Ordenar os itens com base na razão valor/peso
 			Arrays.sort(arrayItens,
@@ -53,6 +55,15 @@ public class Main {
 			int valorTotal = calcularValor(melhorSolucao, arrayItens);
 
 			imprimirSolucaoDetalhada(melhorSolucao, arrayItens, capacidadesMochila, valorTotal);
+			
+			// Fim do tempo de execução
+            long endTime = System.nanoTime();
+            long executionTime = endTime - startTime;
+
+            // Imprimir o tempo de execução em segundos
+            System.out.println("=====================================");
+            System.out.println("Tempo de execução: " + String.format("%.2f", (executionTime / 1_000_000_000.0)) + " segundos");
+            System.out.println("=====================================");
 
 		} catch (IOException e) {
 			System.out.println("Erro: " + e);
